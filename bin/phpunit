@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [ $# -eq 0 ]
+  then
+    docker-compose exec php vendor/bin/phpunit --stop-on-failure -vvv
+  else
+    docker-compose exec php vendor/bin/phpunit "$@"
+fi

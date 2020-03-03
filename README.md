@@ -27,3 +27,7 @@ package development environment.
      ```
      bin/composer install
      ```
+
+# Development
+
+Read the [Contributing to API Platform](https://github.com/api-platform/core/blob/master/CONTRIBUTING.md).

@@ -17,3 +17,5 @@ RUN mkdir -p /var/www/code/vendor && chown www-data:www-data /var/www/code/vendo
 RUN mkdir -p /home/www-data/.composer && chown www-data:www-data /home/www-data/.composer
 
 USER www-data
+
+RUN composer global require hirak/prestissimo

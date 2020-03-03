@@ -31,3 +31,8 @@ package development environment.
 # Development
 
 Read the [Contributing to API Platform](https://github.com/api-platform/core/blob/master/CONTRIBUTING.md).
+
+## Development environment container
+To run a command in a running container:
+
+    docker-compose exec php sh

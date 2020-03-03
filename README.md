@@ -27,3 +27,44 @@ package development environment.
      ```
      bin/composer install
      ```
+
+# Development
+
+Read the [Contributing to API Platform](https://github.com/api-platform/core/blob/master/CONTRIBUTING.md).
+
+## Development environment container
+To run a command in a running container:
+
+    docker-compose exec php sh
+
+## Tests
+
+### PHPUnit
+Run all tests with default arguments
+
+    bin/phpunit
+    
+The same as above
+
+    bin/phpunit --stop-on-failure -vvv
+    
+Run tests in selected folder
+
+    bin/phpunit tests/Action
+    
+Run selected test
+
+    bin/phpunit --filter testInvalidFilter
+    bin/phpunit --filter ApiFilterTest::testInvalidFilter
+    
+Run tests in selected class
+    
+    bin/phpunit --filter ApiFilterTest
+    
+Run tests from selected groups
+    
+    bin/phpunit --group mongodb,legacy,time-sensitive,resource-hog
+    
+Run tests that are not in selected groups
+    
+    bin/phpunit --exclude-group mongodb,legacy,time-sensitive,resource-hog

@@ -1,2 +1,3 @@
 # api-platform-core-dev
-API Platform core package development environment
+[API Platform core](https://github.com/api-platform/core)
+package development environment.

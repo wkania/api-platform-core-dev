@@ -14,6 +14,8 @@ RUN mkdir -p /home/www-data/.composer && chown www-data:www-data /home/www-data/
 RUN apk --update add --virtual build-dependencies build-base autoconf \
   && pecl install mongodb \
   && docker-php-ext-enable mongodb \
+  && pecl install pcov \
+  && docker-php-ext-enable pcov \
   && apk del build-dependencies build-base autoconf
 
 USER www-data

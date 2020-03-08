@@ -1,4 +1,5 @@
 code/
 composer/
+coverage/
 .idea/
 .env

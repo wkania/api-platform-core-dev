@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [ $# -eq 0 ]
+  then
+    docker-compose exec php vendor/bin/phpunit --coverage-html coverage -vvv --stop-on-failure && mv code/coverage coverage
+  else
+    docker-compose exec php vendor/bin/phpunit "$@"
+fi

@@ -2,6 +2,10 @@ FROM php:7.2.28-fpm-alpine
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
+RUN curl -L https://cs.symfony.com/download/php-cs-fixer-v2.phar -o php-cs-fixer \
+  && chmod a+x php-cs-fixer \
+  && mv php-cs-fixer /usr/local/bin/php-cs-fixer
+
 WORKDIR /var/www/code
 
 ARG PUID

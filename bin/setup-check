@@ -1,0 +1,26 @@
+#!/bin/sh
+
+. $(dirname "$0")/lib/output.sh
+
+setup_invalid=false
+if ! [ -x "$(command -v git)" ]; then
+  output "Git is not installed." "error"
+  setup_invalid=true
+fi
+
+if ! [ -x "$(command -v docker)" ]; then
+  output "Docker is not installed." "error"
+  setup_invalid=true
+fi
+
+if ! [ -x "$(command -v docker-compose)" ]; then
+  output "Docker Compose is not installed." "error"
+  setup_invalid=true
+  exit 1
+fi
+
+if [ "$setup_invalid" = true ] ; then
+    exit 1
+else
+    output "All checks have passed." "success"
+fi

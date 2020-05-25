@@ -38,6 +38,9 @@ package development environment.
 
 Read the [Contributing to API Platform](https://github.com/api-platform/core/blob/master/CONTRIBUTING.md).
 
+Use `bin/git` instead of `git` when working on the API Platform code.  
+Use `git` only to develop this development environment.
+
 ## Development environment container
 To run a command in a running container:
 

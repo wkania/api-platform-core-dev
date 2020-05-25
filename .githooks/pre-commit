@@ -1,0 +1,22 @@
+#!/bin/sh
+
+. $(dirname "$0")/../bin/lib/output.sh
+
+stagedFiles=$(git diff --cached --name-only);
+
+for filename in $stagedFiles
+do
+  if [ ${filename##*.} = "php" ] && [ -f $filename ]; then
+    result=$(./../bin/php-cs-fixer $filename -q)
+    if [ -z "$result" ]; then
+      git add $filename
+      fixedFiles=$fixedFiles$filename"\n"
+    fi
+  fi
+done
+
+if [ -n "$fixedFiles" ]
+then
+    output "Fixed file(s):" "heading"
+    output $fixedFiles "info"
+fi

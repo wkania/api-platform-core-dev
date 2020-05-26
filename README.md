@@ -34,6 +34,12 @@ package development environment.
      bin/composer install
      ```
 
+7. Install a hook to run PHP Cs Fixer on committed files.
+  
+     ```
+     bin/git config core.hooksPath ../.githooks
+     ```
+ 
 # Development
 
 Read the [Contributing to API Platform](https://github.com/api-platform/core/blob/master/CONTRIBUTING.md).
@@ -45,7 +51,11 @@ Use `git` only to develop this development environment.
 To run a command in a running container:
 
     docker-compose exec php sh
+    
+## Disable git hooks locally
 
+    bin/git config core.hooksPath .git/hooks
+    
 ## Tests
 
 ### PHPUnit
@@ -57,7 +67,7 @@ The same as above.
 
     bin/phpunit --stop-on-failure -vvv
     
-Run tests in selected directory.
+Run tests in the selected directory.
 
     bin/phpunit tests/Action
     
@@ -66,7 +76,7 @@ Run selected test.
     bin/phpunit --filter testInvalidFilter
     bin/phpunit --filter ApiFilterTest::testInvalidFilter
     
-Run tests in selected class.
+Run tests in the selected class.
     
     bin/phpunit --filter ApiFilterTest
     

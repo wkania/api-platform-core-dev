@@ -1,12 +1,19 @@
 #!/bin/sh
 
-. $(dirname "$0")/../bin/lib/output.sh
+# shellcheck source=bin/lib/output.sh
+. "$(dirname "$0")/../bin/lib/output.sh"
 
 stagedFiles=$(git diff --cached --name-only)
-modifiedFiles=$(git ls-files -m);
+modifiedFiles=$(git ls-files -m)
 
 for filename in $stagedFiles
 do
+  # Skip binary file
+  result=$(file -bL --mime "$filename" | grep -c '^text')
+  if [ "$result" -eq 0 ]; then
+    continue
+  fi
+
   # Check if staged file was modified before commit.
   staged_file_is_modified=false
   for modified in $modifiedFiles
@@ -17,17 +24,17 @@ do
     fi
   done
 
-  # Check is PHP file.
-  if [ ${filename##*.} = "php" ] && [ -f $filename ]; then
+  # Check if a PHP file.
+  if [ "${filename##*.}" = "php" ] && [ -f "$filename" ]; then
     # Check if file need to be fixed.
-    result=$(./../bin/php-cs-fixer $filename --dry-run --diff 2>&1 | grep -c "begin diff")
-    if [ $result -gt 0 ]; then
+    result=$(./../bin/php-cs-fixer "$filename" --dry-run --diff 2>&1 | grep -c "begin diff")
+    if [ "$result" -gt 0 ]; then
       if [ $staged_file_is_modified = true ]; then
         problematicFiles=$problematicFiles$filename"\n"
         continue
       else
-        ./../bin/php-cs-fixer $filename
-        "git add $filename"
+        ./../bin/php-cs-fixer "$filename"
+        git add "$filename"
         fixedFiles=$fixedFiles$filename"\n"
       fi
     fi
@@ -37,13 +44,13 @@ do
   result=$(tail -n 1 "$stagedFiles")
   if [ "$result" != "" ]; then
     if [ $staged_file_is_modified = true ]; then
-      problematicFiles=$problematicFiles$filename"\n"
+      problematicFiles="$problematicFiles$filename\n"
       continue
     else
       # Add a newline when missing.
       printf "\n" >> "$stagedFiles"
-      "git add $filename"
-      fixedFiles=$fixedFiles$filename"\n"
+      git add "$filename"
+      fixedFiles="$fixedFiles$filename\n"
     fi
   fi
 done

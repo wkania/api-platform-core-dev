@@ -22,19 +22,25 @@ package development environment.
      git clone your-fork code
      ```
      
-5. Build and run development environment.
+5. Add api-platform/core repository.
+
+     ```
+     bin/git remote add upstream https://github.com/api-platform/core.git 
+     ```
+
+6. Build and run development environment.
 
      ```
      docker-compose up
      ```
 
-6. Install api-platform/core dependencies.
+7. Install api-platform/core dependencies.
 
      ```
      bin/composer install
      ```
 
-7. Install a hook to run PHP Cs Fixer on committed files.
+8. Install a hook to run PHP Cs Fixer on committed files.
   
      ```
      bin/git config core.hooksPath ../.githooks
@@ -55,6 +61,13 @@ To run a command in a running container:
 ## Disable git hooks locally
 
     bin/git config core.hooksPath .git/hooks
+
+## Sync fork
+Sync your fork with up to date api-platform/core repository
+
+    bin/git fetch upstream
+    bin/git merge upstream/master
+    bin/git push origin master
     
 ## Tests
 

@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [ $# -eq 0 ]
+  then
+    docker-compose exec php vendor/bin/behat --profile=default --stop-on-failure --no-interaction -vv
+  else
+    docker-compose exec php vendor/bin/behat "$@"
+fi

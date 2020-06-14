@@ -11,5 +11,6 @@ services:
             - .env
         volumes:
             - ./docker/php-ini-overrides.ini:/usr/local/etc/php/conf.d/99-overrides.ini
+            - ./docker/php-fpm-overrides.conf:/usr/local/etc/php-fpm.d/zzz-overrides.conf
             - ./code/:/var/www/code
             - ./composer/cache:/home/www-data/.composer/cache

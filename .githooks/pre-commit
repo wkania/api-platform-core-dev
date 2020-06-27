@@ -10,8 +10,8 @@ modifiedFiles=$(git ls-files -m)
 result=$(ps -ocommand= -p $PPID | grep -c ' --amend')
 # check if empty commit
 if [ -z "$stagedFiles" ] && [ "$result" -eq 0 ]; then
-    output 'No changes added to commit (use "git add" and/or "git commit -a").' "error"
-    exit 1
+  output 'No changes added to commit (use "git add" and/or "git commit -a").' "error"
+  exit 1
 fi
 
 for filename in $stagedFiles
@@ -23,11 +23,11 @@ do
   fi
 
   # Check if staged file was modified before commit.
-  staged_file_is_modified=false
+  stagedFileIsModified=false
   for modified in $modifiedFiles
   do
     if [ "$modified" = "$filename" ]; then
-      staged_file_is_modified=true
+      stagedFileIsModified=true
       break
     fi
   done
@@ -37,7 +37,7 @@ do
     # Check if file need to be fixed.
     result=$(./../bin/php-cs-fixer "$filename" --dry-run --diff 2>&1 | grep -c "begin diff")
     if [ "$result" -gt 0 ]; then
-      if [ $staged_file_is_modified = true ]; then
+      if [ $stagedFileIsModified = true ]; then
         problematicFiles=$problematicFiles$filename"\n"
         continue
       else
@@ -47,11 +47,31 @@ do
       fi
     fi
   fi
+  
+  # Check if there is a line with only whitespace characters at the end of a file.
+  check=true
+  while [ $check = true ]
+  do
+    check=false
+    lastLine=$(tail -n 1 "$stagedFiles")
+    result=$(echo "$lastLine" | grep -c "^\s*$")
+    if [ "$result" -gt 0 ]; then
+      if [ $stagedFileIsModified = true ]; then
+        problematicFiles=$problematicFiles$filename"\n"
+        continue
+      else
+        numberOfLines=`expr $(cat "$stagedFiles" | wc -l) - 1`
+        result=$(head -n "$numberOfLines" "$stagedFiles")
+        printf "$result" >| "$stagedFiles"
+        lastLine=$(tail -n 1 "$stagedFiles")
+        check=true
+      fi
+    fi
+  done
 
   # Check if there is a newline at the end of a file.
-  result=$(tail -n 1 "$stagedFiles")
-  if [ "$result" != "" ]; then
-    if [ $staged_file_is_modified = true ]; then
+  if [ "$lastLine" != "" ]; then
+    if [ $stagedFileIsModified = true ]; then
       problematicFiles="$problematicFiles$filename\n"
       continue
     else
@@ -65,14 +85,14 @@ done
 
 if [ -n "$fixedFiles" ]
 then
-    output "File(s) fixed and added to the commit:" "heading"
-    output "$fixedFiles" "info"
+  output "File(s) fixed and added to the commit:" "heading"
+  output "$fixedFiles" "info"
 fi
 
 if [ -n "$problematicFiles" ]
 then
-    output "File(s) cannot be fixed because it has been modified after being staged." "heading"
-    output '(use "bin/git add <file>" and/or "bin/git restore <file>"):' "heading"
-    output "$problematicFiles" "info"
-    exit 1
+  output "File(s) cannot be fixed because it has been modified after being staged." "heading"
+  output '(use "bin/git add <file>" and/or "bin/git restore <file>"):' "heading"
+  output "$problematicFiles" "info"
+  exit 1
 fi

@@ -5,7 +5,7 @@
 
 # check if commit amend
 result=$(ps -ocommand= -p $PPID | grep -c ' --amend')
-# check if the current branch previous commit message is the same as the committed one
+# check if the previous commit message in the current branch is the same as the committed one
 if [ "$result" -eq 0 ]; then
   prevMessage=$(git log --no-merges -1 --pretty=format:%B)
   INPUT_FILE=$1

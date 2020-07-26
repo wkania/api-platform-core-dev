@@ -68,6 +68,10 @@ Sync your fork with up to date api-platform/core repository.
     bin/git fetch upstream
     bin/git merge upstream/master
     bin/git push origin master
+
+The same as above in all-in-one command.
+
+    bin/sync-fork
     
 ## Tests
 

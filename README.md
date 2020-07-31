@@ -72,7 +72,18 @@ Sync your fork with up to date api-platform/core repository.
 The same as above in all-in-one command.
 
     bin/sync-fork
+
+## Static Analysis Tool
+
+### PHPStan
+Run with default arguments.
+
+    bin/phpstan
     
+The same as above.
+
+    bin/phpstan analyse -c phpstan.neon.dist
+
 ## Tests
 
 ### PHPUnit

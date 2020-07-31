@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [ $# -eq 0 ]
+  then
+    docker-compose exec php vendor/bin/phpstan
+  else
+    docker-compose exec php vendor/bin/phpstan "$@"
+fi

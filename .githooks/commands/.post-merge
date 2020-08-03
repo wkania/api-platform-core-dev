@@ -1,0 +1,2 @@
+phpstan.neon.dist,bin/composer require phpstan/phpstan --dev
+composer.json,bin/composer install

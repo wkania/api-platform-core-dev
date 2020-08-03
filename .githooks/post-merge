@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# shellcheck source=bin/lib/output.sh
+. "$(dirname "$0")/../bin/lib/output.sh"
+
+# shellcheck source=.githooks/commands/.post-merge
+csv="$(dirname "$0")/../.githooks/commands/.post-merge"
+
+files=$(git diff-tree -r --name-only --no-commit-id HEAD@{1} HEAD)
+
+while IFS=, read -r startsWith command
+do
+  for filename in $files
+  do
+    case "$filename" in
+      $startsWith*)
+        output "Post merge command:" "heading"
+        output "$command" "info"
+        setsid sh -c "./../$command < /dev/stdout"
+      ;;
+    esac
+  done
+done < "$csv"

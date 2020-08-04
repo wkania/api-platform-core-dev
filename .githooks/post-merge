@@ -1,27 +1,31 @@
 #!/bin/sh
 
-# shellcheck source=bin/lib/output.sh
-. "$(dirname "$0")/../bin/lib/output.sh"
+# check if merge from upstream/master
+result=$(ps -ocommand= -p $PPID | grep -c ' merge upstream/master')
+if [ "$result" -eq 1 ]; then
+  # shellcheck source=bin/lib/output.sh
+  . "$(dirname "$0")/../bin/lib/output.sh"
 
-# shellcheck source=.githooks/commands/.post-merge
-configFile="$(dirname "$0")/../.githooks/commands/.post-merge"
+  # shellcheck source=.githooks/commands/.post-merge
+  configFile="$(dirname "$0")/../.githooks/commands/.post-merge"
 
-newAndChangedFiles=$(git diff-tree -r --name-only --no-commit-id HEAD@{1} HEAD)
+  newAndChangedFiles=$(git diff-tree -r --name-only --no-commit-id HEAD@{1} HEAD)
 
-executeCommandsByCondition() {
-  while IFS=, read -r filePathStartsWith command
-  do
-    for filename in $newAndChangedFiles
+  executeCommandsByCondition() {
+    while IFS=, read -r filePathStartsWith command
     do
-      case "$filename" in
-        $filePathStartsWith*)
-          output "Post merge command:" "heading"
-          output "$command" "info"
-          setsid sh -c "./../$command < /dev/stdout"
-        ;;
-      esac
-    done
-  done < "$configFile"
-}
+      for filename in $newAndChangedFiles
+      do
+        case "$filename" in
+          $filePathStartsWith*)
+            output "Post merge command:" "heading"
+            output "$command" "info"
+            setsid sh -c "./../$command < /dev/stdout"
+          ;;
+        esac
+      done
+    done < "$configFile"
+  }
 
-executeCommandsByCondition
+  executeCommandsByCondition
+fi

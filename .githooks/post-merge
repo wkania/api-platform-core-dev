@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 # check if merge from upstream/master
 result=$(ps -ocommand= -p $PPID | grep -c ' merge upstream/master')
@@ -18,13 +18,25 @@ if [ "$result" -eq 1 ]; then
       do
         case "$filename" in
           $filePathStartsWith*)
-            output "Post merge command:" "heading"
+            output "\nPost merge command:" "heading"
             output "$command" "info"
             setsid sh -c "./../$command < /dev/stdout"
+            result=$?
+            if [ $result -ne 0 ]; then
+              problematicCommands=$problematicCommands$command"\n"
+            fi
           ;;
         esac
       done
     done < "$configFile"
+
+    if [ -n "$problematicCommands" ]
+    then
+      output "\nCommand(s) failed." "heading"
+      output 'Run below command(s) after fixing errors:' "heading"
+      output "$problematicCommands" "info"
+      exit 1
+    fi
   }
 
   executeCommandsByCondition

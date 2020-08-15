@@ -2,4 +2,3 @@
 
 bin/git fetch upstream
 bin/git merge upstream/master
-bin/git push origin master

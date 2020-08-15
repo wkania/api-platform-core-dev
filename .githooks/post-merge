@@ -1,23 +1,46 @@
 #!/bin/sh
 
-# shellcheck source=bin/lib/output.sh
-. "$(dirname "$0")/../bin/lib/output.sh"
+# check if merge from upstream/master
+result=$(ps -ocommand= -p $PPID | grep -c ' merge upstream/master')
+if [ "$result" -eq 1 ]; then
+  # shellcheck source=bin/lib/output.sh
+  . "$(dirname "$0")/../bin/lib/output.sh"
 
-# shellcheck source=.githooks/commands/.post-merge
-csv="$(dirname "$0")/../.githooks/commands/.post-merge"
+  # shellcheck source=.githooks/commands/.post-merge
+  configFile="$(dirname "$0")/../.githooks/commands/.post-merge"
 
-files=$(git diff-tree -r --name-only --no-commit-id HEAD@{1} HEAD)
+  newAndChangedFiles=$(git diff-tree -r --name-only --no-commit-id HEAD@{1} HEAD)
 
-while IFS=, read -r startsWith command
-do
-  for filename in $files
-  do
-    case "$filename" in
-      $startsWith*)
-        output "Post merge command:" "heading"
-        output "$command" "info"
-        setsid sh -c "./../$command < /dev/stdout"
-      ;;
-    esac
-  done
-done < "$csv"
+  executeCommandsByCondition() {
+    while IFS=, read -r filePathStartsWith command
+    do
+      for filename in $newAndChangedFiles
+      do
+        case "$filename" in
+          $filePathStartsWith*)
+            output "\nPost merge command:" "heading"
+            output "$command" "info"
+            setsid sh -c "./../$command < /dev/stdout"
+            result=$?
+            if [ $result -ne 0 ]; then
+              problematicCommands=$problematicCommands$command"\n"
+            fi
+          ;;
+        esac
+      done
+    done < "$configFile"
+
+    if [ -n "$problematicCommands" ]
+    then
+      git push origin master
+    else
+      output "\nCommand(s) failed." "heading"
+      output 'Run below command(s) after fixing errors:' "heading"
+      output "$problematicCommands" "info"
+      output 'or run below command to revert the merge:' "heading"
+      output '(use "bin/git reset --hard HEAD@{1}")' "heading"
+    fi
+  }
+
+  executeCommandsByCondition
+fi

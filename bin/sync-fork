@@ -2,7 +2,3 @@
 
 bin/git fetch upstream
 bin/git merge upstream/master
-result=$?
-if [ $result -eq 0 ]; then
-  bin/git push origin master
-fi

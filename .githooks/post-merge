@@ -35,6 +35,8 @@ if [ "$result" -eq 1 ]; then
       output "\nCommand(s) failed." "heading"
       output 'Run below command(s) after fixing errors:' "heading"
       output "$problematicCommands" "info"
+    else
+      git push origin master
     fi
   }
 

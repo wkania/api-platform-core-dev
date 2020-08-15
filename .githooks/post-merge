@@ -1,4 +1,4 @@
-#!/bin/sh -e
+#!/bin/sh
 
 # check if merge from upstream/master
 result=$(ps -ocommand= -p $PPID | grep -c ' merge upstream/master')
@@ -35,7 +35,6 @@ if [ "$result" -eq 1 ]; then
       output "\nCommand(s) failed." "heading"
       output 'Run below command(s) after fixing errors:' "heading"
       output "$problematicCommands" "info"
-      exit 1
     fi
   }
 

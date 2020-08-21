@@ -1,8 +1,19 @@
 #!/bin/sh
 
+# shellcheck source=bin/lib/output.sh
+. "$(dirname "$0")/lib/output.sh"
+
+file="$(dirname "$0")/../code/tests/Fixtures/app/var/cache/test/appAppKernelTestDebugContainer.xml"
+if [ ! -f "$file" ]; then
+    output "Cache not exists." "info"
+    # Dirty fix because of missing Symfony console command.
+    bin/phpunit --filter testReadAnnotations > /dev/null 2>&1
+    output "Cache generated." "success"
+fi
+
 if [ $# -eq 0 ]
   then
-    docker-compose exec php vendor/bin/phpstan
+    docker-compose exec php vendor/bin/phpstan analyse
   else
     docker-compose exec php vendor/bin/phpstan "$@"
 fi

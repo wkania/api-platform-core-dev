@@ -1,0 +1,40 @@
+#!/bin/sh
+
+# shellcheck source=bin/lib/output.sh
+. "$(dirname "$0")/lib/output.sh"
+
+installationInvalid=false
+
+stringContains() {
+  [ -z "$1" ] || {
+    [ -z "${2##*$1*}" ] && [ -n "$2" ];
+  };
+}
+
+result=$(bin/git remote)
+if ! stringContains 'upstream' "$result"; then
+  output "The upstream repository is not set." "error"
+  output '(use "bin/git remote add upstream https://github.com/api-platform/core.git")' "heading"
+  installationInvalid=true
+fi
+
+result=$(bin/git config core.hooksPath)
+if [ "$result" != "../.githooks" ]; then
+  output "Not installed git hooks." "error"
+  output '(use "bin/git config core.hooksPath ../.githooks")' "heading"
+  installationInvalid=true
+fi
+
+bin/composer validate > /dev/null
+result=$?
+if [ $result -ne 0 ]; then
+  output "File composer.lock is not up to date with the latest changes in composer.json." "error"
+  output '(use "bin/composer validate")' "heading"
+  installationInvalid=true
+fi
+
+if [ "$installationInvalid" = true ] ; then
+    exit 1
+else
+    output "All checks have passed." "success"
+fi

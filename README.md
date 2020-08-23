@@ -21,23 +21,23 @@ package development environment.
      ```
      git clone your-fork code
      ```
-     
-5. Add api-platform/core repository.
 
-     ```
-     bin/git remote add upstream https://github.com/api-platform/core.git 
-     ```
-
-6. Build and run development environment.
+5. Build and run development environment.
 
      ```
      docker-compose up
      ```
 
-7. Install api-platform/core dependencies.
+6. Install api-platform/core dependencies.
 
      ```
      bin/composer install
+     ```
+
+7. Add api-platform/core repository.
+
+     ```
+     bin/git remote add upstream https://github.com/api-platform/core.git
      ```
 
 8. Install a hook to run PHP Cs Fixer on committed files.
@@ -46,6 +46,12 @@ package development environment.
      bin/git config core.hooksPath ../.githooks
      ```
  
+9. Check installation.
+
+     ```
+     bin/installation-check
+     ```
+   
 # Development
 
 Read the [Contributing to API Platform](https://github.com/api-platform/core/blob/master/CONTRIBUTING.md).

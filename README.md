@@ -2,6 +2,20 @@
 [API Platform core](https://github.com/api-platform/core)
 package development environment.
 
+# Contents
+
+- [Setup guide](#setup-guide)
+- [Development](#development)
+  - [Development environment container](#development-environment-container)
+  - [Disable git hooks locally](#disable-git-hooks-locally)
+  - [Sync fork](#sync-fork)
+  - [Static Analysis Tool](#static-analysis-tool)
+    - [PHPStan](#phpstan)
+  - [Tests](#tests)
+    - [PHPUnit](#phpunit)
+    - [PHPUnit tests code coverage generation](#phpunit-tests-code-coverage-generation)
+    - [Behat](#behat)
+
 # Setup guide
 
 1. Install `git`, `docker` and `docker-compose` if you don't have them yet.

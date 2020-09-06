@@ -183,6 +183,15 @@ Run tests by scenario name.
 
     bin/behat --stop-on-failure --name "An anonymous user"
 
+Run tests from selected tags.
+    
+    bin/behat --profile=postgres --tags postgres
+    bin/behat --tags sqlite,createSchema,dropSchema
+
+Run tests that are not in selected tags.
+    
+    bin/behat --tags '~createSchema'
+
 Print all available step definitions.
 
     bin/behat --profile=default -dl

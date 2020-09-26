@@ -4,18 +4,24 @@
 . "$(dirname "$0")/lib/output.sh"
 
 setupInvalid=false
-if ! [ -x "$(command -v git)" ]; then
-  output "Git is not installed." "error"
+if [ -x "$(command -v git)" ]; then
+  output "✔ Git is installed." "success"
+else
+  output "✘ Git is not installed." "error"
   setupInvalid=true
 fi
 
-if ! [ -x "$(command -v docker)" ]; then
-  output "Docker is not installed." "error"
+if [ -x "$(command -v docker)" ]; then
+  output "✔ Docker is installed." "success"
+else
+  output "✘ Docker is not installed." "error"
   setupInvalid=true
 fi
 
-if ! [ -x "$(command -v docker-compose)" ]; then
-  output "Docker Compose is not installed." "error"
+if [ -x "$(command -v docker-compose)" ]; then
+  output "✔ Docker Compose is installed." "success"
+else
+  output "✘ Docker Compose is not installed." "error"
   setupInvalid=true
   exit 1
 fi

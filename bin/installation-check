@@ -12,15 +12,19 @@ stringContains() {
 }
 
 result=$(bin/git remote)
-if ! stringContains 'upstream' "$result"; then
-  output "The upstream repository is not set." "error"
+if stringContains 'upstream' "$result"; then
+  output "✔ The upstream repository is set." "success"
+else
+  output "✘ The upstream repository is not set." "error"
   output '(use "bin/git remote add upstream https://github.com/api-platform/core.git")' "heading"
   installationInvalid=true
 fi
 
 result=$(bin/git config core.hooksPath)
-if [ "$result" != "../.githooks" ]; then
-  output "Not installed git hooks." "error"
+if [ "$result" = "../.githooks" ]; then
+  output "✔ Git hooks are installed." "success"
+else
+  output "✘ Not installed git hooks." "error"
   output '(use "bin/git config core.hooksPath ../.githooks")' "heading"
   installationInvalid=true
 fi
@@ -28,9 +32,11 @@ fi
 bin/composer validate > /dev/null
 result=$?
 if [ $result -ne 0 ]; then
-  output "File composer.lock is not up to date with the latest changes in composer.json." "error"
+  output "✘ File composer.lock is not up to date with the latest changes in composer.json." "error"
   output '(use "bin/composer validate")' "heading"
   installationInvalid=true
+else
+  output "✔ The composer.json is valid." "success"
 fi
 
 if [ "$installationInvalid" = true ] ; then

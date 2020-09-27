@@ -3,6 +3,8 @@
 # shellcheck source=bin/lib/output.sh
 . "$(dirname "$0")/lib/output.sh"
 
+output "Running PHPStan...\r" "info" ""
+
 file="$(dirname "$0")/../code/tests/Fixtures/app/var/cache/test/appAppKernelTestDebugContainer.xml"
 if [ ! -f "$file" ]; then
     output "Cache not exists." "info"

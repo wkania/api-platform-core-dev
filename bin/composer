@@ -1,3 +1,8 @@
 #!/bin/sh -e
 
+# shellcheck source=bin/lib/output.sh
+. "$(dirname "$0")/lib/output.sh"
+
+output "Running Composer...\r" "info" ""
+
 docker-compose exec php composer "$@"

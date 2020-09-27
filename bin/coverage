@@ -1,5 +1,10 @@
 #!/bin/sh
 
+# shellcheck source=bin/lib/output.sh
+. "$(dirname "$0")/lib/output.sh"
+
+output "Generating PHPUnit tests code coverage report...\r" "info" ""
+
 if [ $# -eq 0 ]
   then
     docker-compose exec php vendor/bin/phpunit --coverage-html coverage -vvv --stop-on-failure && mv code/coverage coverage

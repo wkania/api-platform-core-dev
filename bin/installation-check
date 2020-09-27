@@ -29,7 +29,10 @@ else
   installationInvalid=true
 fi
 
+output "Validating composer.json..." "info" ""
+
 bin/composer validate > /dev/null
+output "\r" "info" ""
 result=$?
 if [ $result -ne 0 ]; then
   output "✘ File composer.lock is not up to date with the latest changes in composer.json." "error"

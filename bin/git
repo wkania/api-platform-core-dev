@@ -1,3 +1,11 @@
 #!/bin/sh
 
+# shellcheck source=bin/lib/output.sh
+. "$(dirname "$0")/lib/output.sh"
+
 cd code && git "$@"
+
+output "\n---------------------------------------------" "heading"
+output "---------------------------------------------" "highlight"
+output "------    You are working on a fork    ------" "highlight"
+output "---------------------------------------------" "highlight"

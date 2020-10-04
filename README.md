@@ -28,39 +28,46 @@ package development environment.
 
 3. Setup `.env` file based on `.env.dist`:
 
-    Type `id` in console to get **PUID** and **GUID** , use them in `.env` file.
+    Type `id` in console to get **PUID** and **GUID** , use them in `.env` file.  
+    Add remote url to your **fork** of api-platform/core in **FORK_REMOTE_URL** env.
 
-4. Clone your **fork** of api-platform/core.
-
-     ```
-     git clone your-fork code
-     ```
-
-5. Build and run development environment.
+4. Build and run development environment.
 
      ```
      docker-compose up
      ```
 
-6. Install api-platform/core dependencies.
+5. Run all-in-one install command or steps from 6 to 10.
+
+     ```
+     bin/install
+     ```
+
+6. Clone your **fork** of api-platform/core.
+
+     ```
+     git clone your-fork-remote-url code
+     ```
+
+7. Install api-platform/core dependencies.
 
      ```
      bin/composer install
      ```
 
-7. Add api-platform/core repository.
+8. Add api-platform/core repository.
 
      ```
      bin/git remote add upstream https://github.com/api-platform/core.git
      ```
 
-8. Install a hook to run PHP Cs Fixer on committed files.
+9. Install a hook to run PHP Cs Fixer on committed files.
   
      ```
      bin/git config core.hooksPath ../.githooks
      ```
  
-9. Check installation.
+10. Check installation.
 
      ```
      bin/installation-check

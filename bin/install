@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# shellcheck source=bin/lib/output.sh
+. "$(dirname "$0")/lib/output.sh"
+
+# shellcheck source=.env
+. "$(dirname "$0")/../.env"
+
+output "Running install...\r" "info" ""
+
+git clone "$FORK_REMOTE_URL" code
+bin/composer install
+bin/git remote add upstream https://github.com/api-platform/core.git --no-notice
+bin/git config core.hooksPath ../.githooks --no-notice
+bin/installation-check

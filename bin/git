@@ -3,9 +3,29 @@
 # shellcheck source=bin/lib/output.sh
 . "$(dirname "$0")/lib/output.sh"
 
-cd code && git "$@"
+# shellcheck source=bin/lib/string.sh
+. "$(dirname "$0")/lib/string.sh"
 
-output "\n---------------------------------------------" "heading"
-output "---------------------------------------------" "highlight"
-output "------    You are working on a fork    ------" "highlight"
-output "---------------------------------------------" "highlight"
+arguments="$@"
+
+notice=true
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --no-notice)
+      notice=false
+      ;;
+    *)
+  esac
+  shift
+done
+
+gitArguments=$(removeWord "$arguments" "--no-notice")
+
+cd code && git $gitArguments
+
+if [ $notice = true ]; then
+    output "\n---------------------------------------------" "heading"
+    output "---------------------------------------------" "highlight"
+    output "------    You are working on a fork    ------" "highlight"
+    output "---------------------------------------------" "highlight"
+fi

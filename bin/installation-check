@@ -3,13 +3,10 @@
 # shellcheck source=bin/lib/output.sh
 . "$(dirname "$0")/lib/output.sh"
 
-installationInvalid=false
+# shellcheck source=bin/lib/string.sh
+. "$(dirname "$0")/lib/string.sh"
 
-stringContains() {
-  [ -z "$1" ] || {
-    [ -z "${2##*$1*}" ] && [ -n "$2" ];
-  };
-}
+installationInvalid=false
 
 result=$(bin/git remote)
 if stringContains 'upstream' "$result"; then
@@ -20,7 +17,7 @@ else
   installationInvalid=true
 fi
 
-result=$(bin/git config core.hooksPath)
+result=$(bin/git config core.hooksPath --no-notice)
 if [ "$result" = "../.githooks" ]; then
   output "✔ Git hooks are installed." "success"
 else

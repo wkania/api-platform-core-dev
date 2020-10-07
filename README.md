@@ -53,6 +53,7 @@ package development environment.
 
      ```
      bin/composer install
+     bin/phpunit install
      ```
 
 8. Add api-platform/core repository.

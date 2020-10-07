@@ -10,6 +10,7 @@ output "Running install...\r" "info" ""
 
 git clone "$FORK_REMOTE_URL" code
 bin/composer install
+bin/phpunit install
 bin/git remote add upstream https://github.com/api-platform/core.git --no-notice
 bin/git config core.hooksPath ../.githooks --no-notice
 bin/installation-check

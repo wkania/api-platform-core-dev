@@ -1,8 +1,8 @@
-version: '3.6'
+version: '3.7'
 
 services:
-    php:
-        build:
+    php: &php
+        build: &build
             context: docker
             args:
                 - PUID=${PUID}
@@ -14,3 +14,9 @@ services:
             - ./docker/php-fpm-overrides.conf:/usr/local/etc/php-fpm.d/zzz-overrides.conf
             - ./code/:/var/www/code
             - ./composer/cache:/home/www-data/.composer/cache
+
+    php7_1:
+        <<: *php
+        build:
+            <<: *build
+            dockerfile: Dockerfile7_1

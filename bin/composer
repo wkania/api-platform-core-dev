@@ -5,4 +5,7 @@
 
 output "Running Composer...\r" "info" ""
 
-docker-compose exec php composer "$@"
+# shellcheck source=bin/lib/check-the-php-version.sh
+. "$(dirname "$0")/lib/check-the-php-version.sh"
+
+docker-compose exec "$CONTAINER" composer $@

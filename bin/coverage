@@ -5,9 +5,12 @@
 
 output "Generating PHPUnit tests code coverage report...\r" "info" ""
 
-if [ $# -eq 0 ]
+# shellcheck source=bin/lib/check-the-php-version.sh
+. "$(dirname "$0")/lib/check-the-php-version.sh"
+
+if [ -z "$@" ]
   then
-    docker-compose exec php vendor/bin/phpunit --coverage-html coverage -vvv --stop-on-failure && mv code/coverage coverage
+    docker-compose exec "$CONTAINER" vendor/bin/simple-phpunit --coverage-html coverage -vvv --stop-on-failure && mv code/coverage coverage
   else
-    docker-compose exec php vendor/bin/phpunit "$@"
+    docker-compose exec "$CONTAINER" vendor/bin/simple-phpunit $@
 fi

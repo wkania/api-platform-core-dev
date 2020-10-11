@@ -8,6 +8,11 @@ output "Generating PHPUnit tests code coverage report...\r" "info" ""
 # shellcheck source=bin/lib/check-the-php-version.sh
 . "$(dirname "$0")/lib/check-the-php-version.sh"
 
+if [ "$CONTAINER" = "php7_1" ]; then
+  output "PHPUnit tests code coverage generation for the PHP 7.1 is not available." "error"
+  exit 1
+fi
+
 if [ -z "$@" ]
   then
     docker-compose exec "$CONTAINER" vendor/bin/simple-phpunit --coverage-html coverage -vvv --stop-on-failure && mv code/coverage coverage

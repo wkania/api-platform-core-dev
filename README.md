@@ -113,6 +113,15 @@ The same as above in all-in-one command.
 
     bin/sync-fork
 
+## Switch PHP version.
+Default is 7.2.  
+Add to the command: --php-ver=7.1 or --php-ver=8  
+Supported by:
+- bin/behat
+- bin/composer
+- bin/coverage
+- bin/phpunit
+
 ## Static Analysis Tool
 
 ### PHPStan

@@ -14,6 +14,7 @@ services:
             - ./docker/php-fpm-overrides.conf:/usr/local/etc/php-fpm.d/zzz-overrides.conf
             - ./code/:/var/www/code
             - ./composer/cache:/home/www-data/.composer/cache
+            - ./vendors:/var/www/vendors
 
     php7_1:
         <<: *php

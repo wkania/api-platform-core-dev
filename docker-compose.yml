@@ -21,3 +21,9 @@ services:
         build:
             <<: *build
             dockerfile: Dockerfile7_1
+
+    php8:
+        <<: *php
+        build:
+            <<: *build
+            dockerfile: Dockerfile8

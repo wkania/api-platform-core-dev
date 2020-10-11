@@ -79,7 +79,13 @@ package development environment.
      ```
      bin/install-7-1
      ```
+    
+12. Install `api-platform/core` dependencies for the PHP 8 (optionally). Not supported yet.
 
+     ```
+     bin/install-8
+     ```
+    
 # Development
 
 Read the [Contributing to API Platform](https://github.com/api-platform/core/blob/master/CONTRIBUTING.md).

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# check if the PHP version is set in command arguments and set docker container
+# check if the PHP version is set in command arguments and set the Docker container
 ARGUMENTS=""
 CONTAINER="php"
 while [ $# -gt 0 ]; do
@@ -24,3 +24,10 @@ done
 
 # recreate command arguments without the PHP version argument
 set -- "$@" "$ARGUMENTS"
+
+# check the PHP version and set the vendor
+source="/var/www/vendors/$CONTAINER"
+docker-compose exec "$CONTAINER" mkdir -p "$source"
+destination="/var/www/code/vendor"
+docker-compose exec "$CONTAINER" unlink "$destination"
+docker-compose exec "$CONTAINER" ln -s "$source" "$destination"

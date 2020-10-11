@@ -43,20 +43,20 @@ package development environment.
      bin/install
      ```
 
-6. Clone your **fork** of api-platform/core.
+6. Clone your **fork** of `api-platform/core`.
 
      ```
      git clone your-fork-remote-url code
      ```
 
-7. Install api-platform/core dependencies.
+7. Install `api-platform/core` dependencies.
 
      ```
      bin/composer install
      bin/phpunit install
      ```
 
-8. Add api-platform/core repository.
+8. Add `api-platform/core` repository.
 
      ```
      bin/git remote add upstream https://github.com/api-platform/core.git
@@ -73,7 +73,13 @@ package development environment.
      ```
      bin/installation-check
      ```
-   
+    
+11. Install `api-platform/core` dependencies for the PHP 7.1 (optionally).
+
+     ```
+     bin/install-7-1
+     ```
+
 # Development
 
 Read the [Contributing to API Platform](https://github.com/api-platform/core/blob/master/CONTRIBUTING.md).

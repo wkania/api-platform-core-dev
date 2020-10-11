@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# shellcheck source=bin/lib/output.sh
+. "$(dirname "$0")/lib/output.sh"
+
+output "Running install for PHP 7.1 ...\r" "info" ""
+cp code/composer.json code/backup-composer.json
+bin/composer update --prefer-lowest --ignore-platform-reqs --php-ver=7.1
+bin/composer remove --dev --no-update doctrine/mongodb-odm doctrine/mongodb-odm-bundle --php-ver=7.1
+mv -f code/backup-composer.json code/composer.json

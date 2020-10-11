@@ -1,10 +1,13 @@
-FROM php:7.2.34-fpm-alpine
+FROM php:7.1.33-fpm-alpine
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 RUN curl -L https://cs.symfony.com/download/php-cs-fixer-v2.phar -o php-cs-fixer \
   && chmod a+x php-cs-fixer \
   && mv php-cs-fixer /usr/local/bin/php-cs-fixer
+
+RUN curl -O https://pear.php.net/go-pear.phar \
+  && php -d detect_unicode=0 go-pear.phar
 
 WORKDIR /var/www/code
 
@@ -18,8 +21,6 @@ RUN mkdir -p /home/www-data/.composer && chown www-data:www-data /home/www-data/
 RUN apk --update add --virtual build-dependencies build-base autoconf \
   && pecl install mongodb \
   && docker-php-ext-enable mongodb \
-  && pecl install pcov \
-  && docker-php-ext-enable pcov \
   && apk del build-dependencies build-base autoconf
 
 USER www-data

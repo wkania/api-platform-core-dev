@@ -43,20 +43,20 @@ package development environment.
      bin/install
      ```
 
-6. Clone your **fork** of api-platform/core.
+6. Clone your **fork** of `api-platform/core`.
 
      ```
      git clone your-fork-remote-url code
      ```
 
-7. Install api-platform/core dependencies.
+7. Install `api-platform/core` dependencies.
 
      ```
      bin/composer install
      bin/phpunit install
      ```
 
-8. Add api-platform/core repository.
+8. Add `api-platform/core` repository.
 
      ```
      bin/git remote add upstream https://github.com/api-platform/core.git
@@ -73,7 +73,19 @@ package development environment.
      ```
      bin/installation-check
      ```
-   
+    
+11. Install `api-platform/core` dependencies for the PHP 7.1 (optionally).
+
+     ```
+     bin/install-7-1
+     ```
+    
+12. Install `api-platform/core` dependencies for the PHP 8 (optionally). Not supported yet.
+
+     ```
+     bin/install-8
+     ```
+    
 # Development
 
 Read the [Contributing to API Platform](https://github.com/api-platform/core/blob/master/CONTRIBUTING.md).
@@ -100,6 +112,15 @@ Sync your fork with up to date api-platform/core repository.
 The same as above in all-in-one command.
 
     bin/sync-fork
+
+## Switch PHP version.
+Default is 7.2.  
+Add to the command: --php-ver=7.1 or --php-ver=8  
+Supported by:
+- bin/behat
+- bin/composer
+- bin/coverage
+- bin/phpunit
 
 ## Static Analysis Tool
 

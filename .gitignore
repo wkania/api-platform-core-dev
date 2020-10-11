@@ -1,5 +1,6 @@
 code/
 composer/
 coverage/
+vendors/
 .idea/
 .env

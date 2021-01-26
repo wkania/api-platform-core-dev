@@ -6,9 +6,9 @@
 stagedFiles=$(git diff --cached --name-only)
 modifiedFiles=$(git ls-files -m)
 
-# check if commit amend
+# Check if commit amend.
 result=$(ps -ocommand= -p $PPID | grep -c ' --amend')
-# check if empty commit
+# Check if empty commit.
 if [ -z "$stagedFiles" ] && [ "$result" -eq 0 ]; then
   output 'No changes added to commit (use "git add" and/or "git commit -a").' "error"
   exit 1
@@ -16,7 +16,7 @@ fi
 
 for filename in $stagedFiles
 do
-  # Skip binary file
+  # Skip binary file.
   result=$(file -bL --mime "$filename" | grep -c '^text')
   if [ "$result" -eq 0 ]; then
     continue
@@ -35,15 +35,16 @@ do
   # Check if a PHP file.
   if [ "${filename##*.}" = "php" ] && [ -f "$filename" ]; then
     # Check if file need to be fixed.
-    result=$(./../bin/php-cs-fixer "$filename" --dry-run --diff 2>&1 | grep -c "begin diff")
+    result=$($(dirname "$0")/../bin/php-cs-fixer "$filename" --dry-run --diff 2>&1 | grep -c "begin diff")
     if [ "$result" -gt 0 ]; then
       if [ $stagedFileIsModified = true ]; then
         problematicFiles=$problematicFiles$filename"\n"
         continue
       else
-        ./../bin/php-cs-fixer "$filename"
+        "$(dirname "$0")/../bin/php-cs-fixer" "$filename"
         git add "$filename"
         fixedFiles=$fixedFiles$filename"\n"
+        continue
       fi
     fi
   fi

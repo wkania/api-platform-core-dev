@@ -44,6 +44,7 @@ do
         "$(dirname "$0")/../bin/php-cs-fixer" "$filename"
         git add "$filename"
         fixedFiles=$fixedFiles$filename"\n"
+        continue
       fi
     fi
   fi

@@ -97,7 +97,22 @@ Use `git` only to develop this development environment.
 To run a command in a running container:
 
     docker-compose exec php sh
-    
+
+## Git Hooks description
+
+### Committing-Workflow Hooks
+
+- pre-commit
+  - check if there are changes in the commit (disabled by the `amend` option)
+  - check only text file(s), skip a binary file(s)
+  - check if the staged file was modified before creating a commit
+  - do not change any modified file(s)
+  - apply PHP Coding Standards (PHP CS Fixer) to PHP file(s)
+  - add a missing blank line at the end of the file (EOF)
+  - add a file(s) modified by the script to the commit
+  - report file(s) added to the commit
+  - report file(s) that cannot be fixed because it has been modified after being staged
+
 ## Disable git hooks locally
 
     bin/git config core.hooksPath .git/hooks

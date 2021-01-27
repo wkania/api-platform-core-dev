@@ -14,6 +14,8 @@ if [ -z "$stagedFiles" ] && [ "$result" -eq 0 ]; then
   exit 1
 fi
 
+output "Checking code quality..." "heading"
+
 for filename in $stagedFiles
 do
   # Skip binary file.

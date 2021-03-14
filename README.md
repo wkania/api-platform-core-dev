@@ -7,6 +7,8 @@ package development environment.
 - [Setup guide](#setup-guide)
 - [Development](#development)
   - [Development environment container](#development-environment-container)
+  - [Git Hooks description](#git-hooks-description)
+      - [Committing-Workflow Hooks](#committing-workflow-hooks)
   - [Disable git hooks locally](#disable-git-hooks-locally)
   - [Sync fork](#sync-fork)
   - [Static Analysis Tool](#static-analysis-tool)

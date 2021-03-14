@@ -24,5 +24,3 @@ RUN apk --update add --virtual build-dependencies build-base autoconf \
   && apk del build-dependencies build-base autoconf
 
 USER www-data
-
-RUN composer global require hirak/prestissimo

@@ -3,14 +3,23 @@
 # shellcheck source=bin/lib/output.sh
 . "$(dirname "$0")/lib/output.sh"
 
+# shellcheck source=bin/lib/string.sh
+. "$(dirname "$0")/lib/string.sh"
+
 # shellcheck source=.env
 . "$(dirname "$0")/../.env"
 
 output "Running install...\r" "info" ""
 
-git clone "$FORK_REMOTE_URL" code
+if [ ! -d "code" ]; then
+  git clone "$FORK_REMOTE_URL" code
+fi
+docker-compose up -d
 bin/composer install
 bin/phpunit install
-bin/git remote add upstream https://github.com/api-platform/core.git --no-notice
+result=$(bin/git remote)
+if ! stringContains 'upstream' "$result"; then
+  bin/git remote add upstream https://github.com/api-platform/core.git --no-notice
+fi
 bin/git config core.hooksPath ../.githooks --no-notice
 bin/installation-check

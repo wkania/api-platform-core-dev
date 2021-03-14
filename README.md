@@ -22,67 +22,74 @@ package development environment.
 
 1. Install `git`, `docker` and `docker-compose` if you don't have them yet.
 
-2. Check setup requirements.
+2. Clone project code.
+
+     ```
+     git clone https://github.com/wkania/api-platform-core-dev.git
+     cd api-platform-core-dev
+     ```
+
+3. Setup `.env` file based on `.env.dist`:
+
+   Type `id` in console to get **PUID** and **GUID** , use them in `.env` file.  
+   Add remote url to your **fork** of api-platform/core in **FORK_REMOTE_URL** env.
+
+4. Check setup requirements.
 
      ```
      bin/setup-check
      ```
 
-3. Setup `.env` file based on `.env.dist`:
-
-    Type `id` in console to get **PUID** and **GUID** , use them in `.env` file.  
-    Add remote url to your **fork** of api-platform/core in **FORK_REMOTE_URL** env.
-
-4. Build and run development environment.
-
-     ```
-     docker-compose up
-     ```
-
-5. Run all-in-one install command or steps from 6 to 10.
+5. Run all-in-one installation command or steps from 6 to 11.
 
      ```
      bin/install
      ```
 
-6. Clone your **fork** of `api-platform/core`.
+6. Build and run development environment.
+
+     ```
+     docker-compose up -d
+     ```
+
+7. Clone your **fork** of `api-platform/core`.
 
      ```
      git clone your-fork-remote-url code
      ```
 
-7. Install `api-platform/core` dependencies.
+8. Install `api-platform/core` dependencies.
 
      ```
      bin/composer install
      bin/phpunit install
      ```
 
-8. Add `api-platform/core` repository.
+9. Add `api-platform/core` repository.
 
      ```
      bin/git remote add upstream https://github.com/api-platform/core.git
      ```
 
-9. Install a hook to run PHP Cs Fixer on committed files.
+10. Install a hook to run PHP Cs Fixer on committed files.
   
      ```
      bin/git config core.hooksPath ../.githooks
      ```
  
-10. Check installation.
+11. Check installation.
 
      ```
      bin/installation-check
      ```
     
-11. Install `api-platform/core` dependencies for the PHP 7.1 (optionally).
+12. Install `api-platform/core` dependencies for the PHP 7.1 (optionally).
 
      ```
      bin/install-7-1
      ```
     
-12. Install `api-platform/core` dependencies for the PHP 8 (optionally). Not supported yet.
+13. Install `api-platform/core` dependencies for the PHP 8 (optionally). Not supported yet.
 
      ```
      bin/install-8

@@ -12,6 +12,7 @@ ARG PUID
 ARG GUID
 RUN apk --no-cache add shadow \
     && usermod -u $PUID www-data && groupmod -g $GUID www-data
+RUN chown www-data:www-data /var/www/code
 RUN mkdir -p /var/www/code/vendor && chown www-data:www-data /var/www/code/vendor
 RUN mkdir -p /home/www-data/.composer && chown www-data:www-data /home/www-data/.composer
 

@@ -3,6 +3,8 @@
 # shellcheck source=bin/lib/output.sh
 . "$(dirname "$0")/lib/output.sh"
 
+output 'Setup check' "heading"
+
 setupInvalid=false
 if [ -x "$(command -v git)" ]; then
   output "✔ Git is installed." "success"

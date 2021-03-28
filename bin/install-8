@@ -4,4 +4,4 @@
 . "$(dirname "$0")/lib/output.sh"
 
 output "Running install for PHP 8 ...\r" "info" ""
-bin/composer install --ignore-platform-reqs --php-ver=8
+bin/composer install --php-ver=8

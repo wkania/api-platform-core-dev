@@ -89,7 +89,7 @@ package development environment.
      bin/install-7-1
      ```
     
-13. Install `api-platform/core` dependencies for the PHP 8 (optionally). Not supported yet.
+13. Install `api-platform/core` dependencies for the PHP 8 (optionally).
 
      ```
      bin/install-8

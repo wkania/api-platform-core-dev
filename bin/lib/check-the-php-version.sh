@@ -25,8 +25,8 @@ done
 # recreate command arguments without the PHP version argument
 set -- "$@" "$ARGUMENTS"
 
-# check the PHP version and set the vendor
-source="/var/www/vendors/$CONTAINER"
+# set the vendor according to the PHP version
+source="/var/www/vendors/$CONTAINER/vendor"
 docker-compose exec "$CONTAINER" mkdir -p "$source"
 destination="/var/www/code/vendor"
 docker-compose exec "$CONTAINER" rm -rf "$destination"

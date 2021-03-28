@@ -12,9 +12,31 @@ services:
         volumes:
             - ./docker/php-ini-overrides.ini:/usr/local/etc/php/conf.d/99-overrides.ini
             - ./docker/php-fpm-overrides.conf:/usr/local/etc/php-fpm.d/zzz-overrides.conf
-            - ./code/:/var/www/code
             - ./composer/cache:/home/www-data/.composer/cache
             - ./vendors:/var/www/vendors
+            - ./code/features:/var/www/code/features
+            - ./code/src:/var/www/code/src
+            - ./code/tests:/var/www/code/tests
+            - type: bind
+              source: ./code/.php_cs.dist
+              target: /var/www/code/.php_cs.dist
+              read_only: false
+            - type: bind
+              source: ./code/behat.yml.dist
+              target: /var/www/code/behat.yml.dist
+              read_only: false
+            - type: bind
+              source: ./code/composer.json
+              target: /var/www/code/composer.json
+              read_only: false
+            - type: bind
+              source: ./code/phpstan.neon.dist
+              target: /var/www/code/phpstan.neon.dist
+              read_only: false
+            - type: bind
+              source: ./code/phpunit.xml.dist
+              target: /var/www/code/phpunit.xml.dist
+              read_only: false
 
     php7_1:
         <<: *php

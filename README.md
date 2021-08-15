@@ -111,16 +111,16 @@ To run a command in a running container:
 
 ### Committing-Workflow Hooks
 
-- pre-commit
+- pre-commit, for all staged files
   - check if there are changes in the commit (disabled by the `amend` option)
-  - check only text file(s), skip a binary file(s)
+  - check only text file, skip a binary file
   - check if the staged file was modified before creating a commit
-  - do not change any modified file(s)
-  - apply PHP Coding Standards (PHP CS Fixer) to PHP file(s)
+  - do not change any modified file
+  - apply PHP Coding Standards (PHP CS Fixer) to PHP file
   - add a missing blank line at the end of the file (EOF)
-  - add a file(s) modified by the script to the commit
-  - report file(s) added to the commit
-  - report file(s) that cannot be fixed because it has been modified after being staged
+  - add a file modified by the script to the commit
+  - report file added to the commit
+  - report file that cannot be fixed because it has been modified after being staged
 
 ## Disable git hooks locally
 

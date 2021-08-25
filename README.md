@@ -11,6 +11,7 @@ package development environment.
       - [Committing-Workflow Hooks](#committing-workflow-hooks)
   - [Disable git hooks locally](#disable-git-hooks-locally)
   - [Sync fork](#sync-fork)
+  - [Switch PHP version](#switch-php-version)
   - [Static Analysis Tool](#static-analysis-tool)
     - [PHPStan](#phpstan)
   - [Tests](#tests)
